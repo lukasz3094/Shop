@@ -16,7 +16,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using WPF.ApiServices;
+using WPF.ViewModel;
 
 namespace WPF
 {
@@ -27,20 +29,33 @@ namespace WPF
     {
         public MainWindow()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            DataContext = new MainWindowVM();
         }
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
+                if (!(DataContext is MainWindowVM vm))
+                    return;
+
                 var apiService = new ProductService();
                 var products = await apiService.GetAll();
-                MessageBox.Show(products.Count.ToString());
+                var random = new Random();
+
+                foreach (var product in products)
+                {
+                    var number = random.Next(1, 10);
+                    var imageText = $"image{number}";
+                    product.Image = $"Images/{imageText}.jpg";
+                }
+
+                vm.Products = new ObservableCollection<ProductModel>(products);
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error while loading data from db");
             }
         }
     }
