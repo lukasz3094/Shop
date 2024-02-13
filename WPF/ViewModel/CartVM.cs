@@ -9,11 +9,25 @@ using System.Threading.Tasks;
 
 namespace WPF.ViewModel
 {
-    public class MainWindowVM : INotifyPropertyChanged
+    public class CartVM : INotifyPropertyChanged
     {
-        public MainWindowVM()
+        public CartVM()
         {
+            Cart = new ObservableCollection<CartModel>();
+            Products = new ObservableCollection<ProductModel>();
+            WishList = new ObservableCollection<WishListModel>();
+        }
 
+        private ObservableCollection<CartModel> _cart;
+        public ObservableCollection<CartModel> Cart
+        {
+            get { return _cart; }
+            set
+            {
+                if (_cart != value)
+                    _cart = value;
+                OnPropertyChanged("Cart");
+            }
         }
 
         private ObservableCollection<ProductModel> _products;
@@ -22,7 +36,7 @@ namespace WPF.ViewModel
             get { return _products; }
             set
             {
-                if (value != _products) 
+                if (value != _products)
                 {
                     _products = value;
                     OnPropertyChanged("Products");
@@ -40,20 +54,6 @@ namespace WPF.ViewModel
                 {
                     _wishList = value;
                     OnPropertyChanged("WishList");
-                }
-            }
-        }
-
-        private ObservableCollection<CartModel> _cartList;
-        public ObservableCollection<CartModel> CartList
-        {
-            get { return _cartList; }
-            set
-            {
-                if (value != _cartList)
-                {
-                    _cartList = value;
-                    OnPropertyChanged("CartList");
                 }
             }
         }

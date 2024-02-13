@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EntitiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Addresses">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -27,7 +27,7 @@
           <Key>
             <PropertyRef Name="CartID" />
           </Key>
-          <Property Name="CartID" Type="int" Nullable="false" />
+          <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
@@ -117,15 +117,15 @@
           <Key>
             <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
           <Property Name="ColorID" Type="int" Nullable="false" />
           <Property Name="BrandID" Type="int" Nullable="false" />
-          <Property Name="ProductName" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="38" Scale="0" Nullable="false" />
           <Property Name="StockQuantity" Type="int" Nullable="false" />
-          <Property Name="ImageID" Type="int" />
-          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Image" Type="int" />
+          <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -159,11 +159,11 @@
           <Key>
             <PropertyRef Name="WishlistID" />
           </Key>
-          <Property Name="WishlistID" Type="int" Nullable="false" />
+          <Property Name="WishlistID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Cart_Customers">
+        <Association Name="Cart_Customers_FK">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
           <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
           <ReferentialConstraint>
@@ -175,7 +175,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Cart_Products">
+        <Association Name="Cart_Products_FK">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
           <ReferentialConstraint>
@@ -184,18 +184,6 @@
             </Principal>
             <Dependent Role="Cart">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Categories_ParentCategory">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="CategoryID" />
-            </Principal>
-            <Dependent Role="Categories1">
-              <PropertyRef Name="ParentCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -235,7 +223,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderItems_Orders">
+        <Association Name="OrderItems_Orders_FK">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
           <ReferentialConstraint>
@@ -247,7 +235,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderItems_Products">
+        <Association Name="OrderItems_Products_FK">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
           <ReferentialConstraint>
@@ -259,7 +247,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Payments_Orders">
+        <Association Name="Orders_Customers_FK">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Payments_Orders_FK">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -271,7 +271,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Payments_PaymentMethods">
+        <Association Name="Payments_PaymentMethods_FK">
           <End Role="PaymentMethods" Type="Self.PaymentMethods" Multiplicity="1" />
           <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -283,7 +283,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Brands">
+        <Association Name="Product_Brands_FK">
           <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -295,7 +295,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Categories">
+        <Association Name="Product_Categories_FK">
           <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -307,7 +307,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Colors">
+        <Association Name="Product_Colors_FK">
           <End Role="Colors" Type="Self.Colors" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
@@ -319,19 +319,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Images">
-          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+        <Association Name="Reviews_Customers_FK">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Images">
-              <PropertyRef Name="ImageID" />
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
             </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="ImageID" />
+            <Dependent Role="Reviews">
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Reviews_Products">
+        <Association Name="Reviews_Products_FK">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
@@ -343,7 +343,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shipments_Orders">
+        <Association Name="Shipments_Orders_FK1">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="Shipments" Type="Self.Shipments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -355,7 +355,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shipments_ShippingMethods">
+        <Association Name="Shipments_ShippingMethods_FK">
           <End Role="ShippingMethods" Type="Self.ShippingMethods" Multiplicity="1" />
           <End Role="Shipments" Type="Self.Shipments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -367,7 +367,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Wishlist_Customers">
+        <Association Name="Wishlist_Customers_FK">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
           <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
           <ReferentialConstraint>
@@ -379,7 +379,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Wishlist_Products">
+        <Association Name="Wishlist_Products_FK">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
           <ReferentialConstraint>
@@ -409,17 +409,13 @@
           <EntitySet Name="Shipments" EntityType="Self.Shipments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShippingMethods" EntityType="Self.ShippingMethods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Wishlist" EntityType="Self.Wishlist" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Cart_Customers" Association="Self.FK_Cart_Customers">
+          <AssociationSet Name="Cart_Customers_FK" Association="Self.Cart_Customers_FK">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Cart" EntitySet="Cart" />
           </AssociationSet>
-          <AssociationSet Name="FK_Cart_Products" Association="Self.FK_Cart_Products">
+          <AssociationSet Name="Cart_Products_FK" Association="Self.Cart_Products_FK">
             <End Role="Products" EntitySet="Products" />
             <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Categories_ParentCategory" Association="Self.FK_Categories_ParentCategory">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
           <AssociationSet Name="FK_Customers_BillingAddresses" Association="Self.FK_Customers_BillingAddresses">
             <End Role="Addresses" EntitySet="Addresses" />
@@ -433,143 +429,240 @@
             <End Role="Addresses" EntitySet="Addresses" />
             <End Role="Customers" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderItems_Orders" Association="Self.FK_OrderItems_Orders">
+          <AssociationSet Name="OrderItems_Orders_FK" Association="Self.OrderItems_Orders_FK">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderItems_Products" Association="Self.FK_OrderItems_Products">
+          <AssociationSet Name="OrderItems_Products_FK" Association="Self.OrderItems_Products_FK">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderItems" EntitySet="OrderItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_Payments_Orders" Association="Self.FK_Payments_Orders">
+          <AssociationSet Name="Orders_Customers_FK" Association="Self.Orders_Customers_FK">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="Payments_Orders_FK" Association="Self.Payments_Orders_FK">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Payments" EntitySet="Payments" />
           </AssociationSet>
-          <AssociationSet Name="FK_Payments_PaymentMethods" Association="Self.FK_Payments_PaymentMethods">
+          <AssociationSet Name="Payments_PaymentMethods_FK" Association="Self.Payments_PaymentMethods_FK">
             <End Role="PaymentMethods" EntitySet="PaymentMethods" />
             <End Role="Payments" EntitySet="Payments" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_Brands" Association="Self.FK_Products_Brands">
+          <AssociationSet Name="Product_Brands_FK" Association="Self.Product_Brands_FK">
             <End Role="Brands" EntitySet="Brands" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
+          <AssociationSet Name="Product_Categories_FK" Association="Self.Product_Categories_FK">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_Colors" Association="Self.FK_Products_Colors">
+          <AssociationSet Name="Product_Colors_FK" Association="Self.Product_Colors_FK">
             <End Role="Colors" EntitySet="Colors" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_Images" Association="Self.FK_Products_Images">
-            <End Role="Images" EntitySet="Images" />
-            <End Role="Products" EntitySet="Products" />
+          <AssociationSet Name="Reviews_Customers_FK" Association="Self.Reviews_Customers_FK">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Reviews" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK_Reviews_Products" Association="Self.FK_Reviews_Products">
+          <AssociationSet Name="Reviews_Products_FK" Association="Self.Reviews_Products_FK">
             <End Role="Products" EntitySet="Products" />
             <End Role="Reviews" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK_Shipments_Orders" Association="Self.FK_Shipments_Orders">
+          <AssociationSet Name="Shipments_Orders_FK1" Association="Self.Shipments_Orders_FK1">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Shipments" EntitySet="Shipments" />
           </AssociationSet>
-          <AssociationSet Name="FK_Shipments_ShippingMethods" Association="Self.FK_Shipments_ShippingMethods">
+          <AssociationSet Name="Shipments_ShippingMethods_FK" Association="Self.Shipments_ShippingMethods_FK">
             <End Role="ShippingMethods" EntitySet="ShippingMethods" />
             <End Role="Shipments" EntitySet="Shipments" />
           </AssociationSet>
-          <AssociationSet Name="FK_Wishlist_Customers" Association="Self.FK_Wishlist_Customers">
+          <AssociationSet Name="Wishlist_Customers_FK" Association="Self.Wishlist_Customers_FK">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Wishlist" EntitySet="Wishlist" />
           </AssociationSet>
-          <AssociationSet Name="FK_Wishlist_Products" Association="Self.FK_Wishlist_Products">
+          <AssociationSet Name="Wishlist_Products_FK" Association="Self.Wishlist_Products_FK">
             <End Role="Products" EntitySet="Products" />
             <End Role="Wishlist" EntitySet="Wishlist" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EntitiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="EntitiesModel.Addresses" />
+          <EntitySet Name="Brands" EntityType="EntitiesModel.Brands" />
+          <EntitySet Name="Cart" EntityType="EntitiesModel.Cart" />
+          <EntitySet Name="Categories" EntityType="EntitiesModel.Categories" />
+          <EntitySet Name="Colors" EntityType="EntitiesModel.Colors" />
+          <EntitySet Name="Customers" EntityType="EntitiesModel.Customers" />
+          <EntitySet Name="Images" EntityType="EntitiesModel.Images" />
+          <EntitySet Name="OrderItems" EntityType="EntitiesModel.OrderItems" />
+          <EntitySet Name="Orders" EntityType="EntitiesModel.Orders" />
+          <EntitySet Name="Passwords" EntityType="EntitiesModel.Passwords" />
+          <EntitySet Name="PaymentMethods" EntityType="EntitiesModel.PaymentMethods" />
+          <EntitySet Name="Payments" EntityType="EntitiesModel.Payments" />
+          <EntitySet Name="Reviews" EntityType="EntitiesModel.Reviews" />
+          <EntitySet Name="Shipments" EntityType="EntitiesModel.Shipments" />
+          <EntitySet Name="ShippingMethods" EntityType="EntitiesModel.ShippingMethods" />
+          <EntitySet Name="Wishlist" EntityType="EntitiesModel.Wishlist" />
+          <AssociationSet Name="FK_Customers_BillingAddresses" Association="EntitiesModel.FK_Customers_BillingAddresses">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customers_ShippingAddresses" Association="EntitiesModel.FK_Customers_ShippingAddresses">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="Cart_Customers_FK" Association="EntitiesModel.Cart_Customers_FK">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customers_Passwords" Association="EntitiesModel.FK_Customers_Passwords">
+            <End Role="Passwords" EntitySet="Passwords" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="Orders_Customers_FK" Association="EntitiesModel.Orders_Customers_FK">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="Reviews_Customers_FK" Association="EntitiesModel.Reviews_Customers_FK">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="Wishlist_Customers_FK" Association="EntitiesModel.Wishlist_Customers_FK">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Wishlist" EntitySet="Wishlist" />
+          </AssociationSet>
+          <AssociationSet Name="OrderItems_Orders_FK" Association="EntitiesModel.OrderItems_Orders_FK">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderItems" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="Payments_Orders_FK" Association="EntitiesModel.Payments_Orders_FK">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="Shipments_Orders_FK1" Association="EntitiesModel.Shipments_Orders_FK1">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Shipments" EntitySet="Shipments" />
+          </AssociationSet>
+          <AssociationSet Name="Payments_PaymentMethods_FK" Association="EntitiesModel.Payments_PaymentMethods_FK">
+            <End Role="PaymentMethods" EntitySet="PaymentMethods" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="Shipments_ShippingMethods_FK" Association="EntitiesModel.Shipments_ShippingMethods_FK">
+            <End Role="ShippingMethods" EntitySet="ShippingMethods" />
+            <End Role="Shipments" EntitySet="Shipments" />
+          </AssociationSet>
+          <EntitySet Name="Products" EntityType="EntitiesModel.Products" />
+          <AssociationSet Name="Product_Brands_FK" Association="EntitiesModel.Product_Brands_FK">
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="Cart_Products_FK" Association="EntitiesModel.Cart_Products_FK">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="Product_Categories_FK" Association="EntitiesModel.Product_Categories_FK">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="Product_Colors_FK" Association="EntitiesModel.Product_Colors_FK">
+            <End Role="Colors" EntitySet="Colors" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="OrderItems_Products_FK" Association="EntitiesModel.OrderItems_Products_FK">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderItems" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="Reviews_Products_FK" Association="EntitiesModel.Reviews_Products_FK">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="Wishlist_Products_FK" Association="EntitiesModel.Wishlist_Products_FK">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Wishlist" EntitySet="Wishlist" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Addresses">
           <Key>
             <PropertyRef Name="AddressID" />
           </Key>
           <Property Name="AddressID" Type="Int32" Nullable="false" />
-          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ZipCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_BillingAddresses" FromRole="Addresses" ToRole="Customers" />
-          <NavigationProperty Name="Customers1" Relationship="Self.FK_Customers_ShippingAddresses" FromRole="Addresses" ToRole="Customers" />
+          <NavigationProperty Name="Customers" Relationship="EntitiesModel.FK_Customers_BillingAddresses" FromRole="Addresses" ToRole="Customers" />
+          <NavigationProperty Name="Customers1" Relationship="EntitiesModel.FK_Customers_ShippingAddresses" FromRole="Addresses" ToRole="Customers" />
         </EntityType>
         <EntityType Name="Brands">
           <Key>
             <PropertyRef Name="BrandID" />
           </Key>
           <Property Name="BrandID" Type="Int32" Nullable="false" />
-          <Property Name="BrandName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Brands" FromRole="Brands" ToRole="Products" />
+          <Property Name="BrandName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="EntitiesModel.Product_Brands_FK" FromRole="Brands" ToRole="Products" />
         </EntityType>
         <EntityType Name="Cart">
           <Key>
             <PropertyRef Name="CartID" />
           </Key>
-          <Property Name="CartID" Type="Int32" Nullable="false" />
+          <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Cart_Customers" FromRole="Cart" ToRole="Customers" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Cart_Products" FromRole="Cart" ToRole="Products" />
+          <NavigationProperty Name="Customers" Relationship="EntitiesModel.Cart_Customers_FK" FromRole="Cart" ToRole="Customers" />
+          <NavigationProperty Name="Products" Relationship="EntitiesModel.Cart_Products_FK" FromRole="Cart" ToRole="Products" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryID" />
           </Key>
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
-          <Property Name="CategoryName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ParentCategoryID" Type="Int32" />
-          <NavigationProperty Name="Categories1" Relationship="Self.FK_Categories_ParentCategory" FromRole="Categories" ToRole="Categories1" />
-          <NavigationProperty Name="Categories2" Relationship="Self.FK_Categories_ParentCategory" FromRole="Categories1" ToRole="Categories" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
+          <NavigationProperty Name="Products" Relationship="EntitiesModel.Product_Categories_FK" FromRole="Categories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Colors">
           <Key>
             <PropertyRef Name="ColorID" />
           </Key>
           <Property Name="ColorID" Type="Int32" Nullable="false" />
-          <Property Name="ColorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Colors" FromRole="Colors" ToRole="Products" />
+          <Property Name="ColorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="EntitiesModel.Product_Colors_FK" FromRole="Colors" ToRole="Products" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="CustomerID" />
           </Key>
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PasswordID" Type="Int32" />
           <Property Name="BillingAddressID" Type="Int32" />
           <Property Name="ShippingAddressID" Type="Int32" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastLoginDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Addresses" Relationship="Self.FK_Customers_BillingAddresses" FromRole="Customers" ToRole="Addresses" />
-          <NavigationProperty Name="Addresses1" Relationship="Self.FK_Customers_ShippingAddresses" FromRole="Customers" ToRole="Addresses" />
-          <NavigationProperty Name="Cart" Relationship="Self.FK_Cart_Customers" FromRole="Customers" ToRole="Cart" />
-          <NavigationProperty Name="Passwords" Relationship="Self.FK_Customers_Passwords" FromRole="Customers" ToRole="Passwords" />
-          <NavigationProperty Name="Wishlist" Relationship="Self.FK_Wishlist_Customers" FromRole="Customers" ToRole="Wishlist" />
+          <NavigationProperty Name="Addresses" Relationship="EntitiesModel.FK_Customers_BillingAddresses" FromRole="Customers" ToRole="Addresses" />
+          <NavigationProperty Name="Addresses1" Relationship="EntitiesModel.FK_Customers_ShippingAddresses" FromRole="Customers" ToRole="Addresses" />
+          <NavigationProperty Name="Cart" Relationship="EntitiesModel.Cart_Customers_FK" FromRole="Customers" ToRole="Cart" />
+          <NavigationProperty Name="Passwords" Relationship="EntitiesModel.FK_Customers_Passwords" FromRole="Customers" ToRole="Passwords" />
+          <NavigationProperty Name="Orders" Relationship="EntitiesModel.Orders_Customers_FK" FromRole="Customers" ToRole="Orders" />
+          <NavigationProperty Name="Reviews" Relationship="EntitiesModel.Reviews_Customers_FK" FromRole="Customers" ToRole="Reviews" />
+          <NavigationProperty Name="Wishlist" Relationship="EntitiesModel.Wishlist_Customers_FK" FromRole="Customers" ToRole="Wishlist" />
         </EntityType>
         <EntityType Name="Images">
           <Key>
             <PropertyRef Name="ImageID" />
           </Key>
           <Property Name="ImageID" Type="Int32" Nullable="false" />
-          <Property Name="ImageName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Images" FromRole="Images" ToRole="Products" />
+          <Property Name="ImageName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ImageData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="OrderItems">
           <Key>
@@ -579,9 +672,9 @@
           <Property Name="OrderID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_OrderItems_Orders" FromRole="OrderItems" ToRole="Orders" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_OrderItems_Products" FromRole="OrderItems" ToRole="Products" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Orders" Relationship="EntitiesModel.OrderItems_Orders_FK" FromRole="OrderItems" ToRole="Orders" />
+          <NavigationProperty Name="Products" Relationship="EntitiesModel.OrderItems_Products_FK" FromRole="OrderItems" ToRole="Products" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -590,26 +683,27 @@
           <Property Name="OrderID" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <NavigationProperty Name="OrderItems" Relationship="Self.FK_OrderItems_Orders" FromRole="Orders" ToRole="OrderItems" />
-          <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_Orders" FromRole="Orders" ToRole="Payments" />
-          <NavigationProperty Name="Shipments" Relationship="Self.FK_Shipments_Orders" FromRole="Orders" ToRole="Shipments" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Customers" Relationship="EntitiesModel.Orders_Customers_FK" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="OrderItems" Relationship="EntitiesModel.OrderItems_Orders_FK" FromRole="Orders" ToRole="OrderItems" />
+          <NavigationProperty Name="Payments" Relationship="EntitiesModel.Payments_Orders_FK" FromRole="Orders" ToRole="Payments" />
+          <NavigationProperty Name="Shipments" Relationship="EntitiesModel.Shipments_Orders_FK1" FromRole="Orders" ToRole="Shipments" />
         </EntityType>
         <EntityType Name="Passwords">
           <Key>
             <PropertyRef Name="PasswordID" />
           </Key>
           <Property Name="PasswordID" Type="Int32" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_Passwords" FromRole="Passwords" ToRole="Customers" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="EntitiesModel.FK_Customers_Passwords" FromRole="Passwords" ToRole="Customers" />
         </EntityType>
         <EntityType Name="PaymentMethods">
           <Key>
             <PropertyRef Name="PaymentMethodID" />
           </Key>
           <Property Name="PaymentMethodID" Type="Int32" Nullable="false" />
-          <Property Name="PaymentMethodName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_PaymentMethods" FromRole="PaymentMethods" ToRole="Payments" />
+          <Property Name="PaymentMethodName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payments" Relationship="EntitiesModel.Payments_PaymentMethods_FK" FromRole="PaymentMethods" ToRole="Payments" />
         </EntityType>
         <EntityType Name="Payments">
           <Key>
@@ -618,32 +712,10 @@
           <Property Name="PaymentID" Type="Int32" Nullable="false" />
           <Property Name="OrderID" Type="Int32" Nullable="false" />
           <Property Name="PaymentMethodID" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="PaymentDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Payments_Orders" FromRole="Payments" ToRole="Orders" />
-          <NavigationProperty Name="PaymentMethods" Relationship="Self.FK_Payments_PaymentMethods" FromRole="Payments" ToRole="PaymentMethods" />
-        </EntityType>
-        <EntityType Name="Products">
-          <Key>
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="CategoryID" Type="Int32" Nullable="false" />
-          <Property Name="ColorID" Type="Int32" Nullable="false" />
-          <Property Name="BrandID" Type="Int32" Nullable="false" />
-          <Property Name="ProductName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="StockQuantity" Type="Int32" Nullable="false" />
-          <Property Name="ImageID" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Brands" Relationship="Self.FK_Products_Brands" FromRole="Products" ToRole="Brands" />
-          <NavigationProperty Name="Cart" Relationship="Self.FK_Cart_Products" FromRole="Products" ToRole="Cart" />
-          <NavigationProperty Name="Categories" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
-          <NavigationProperty Name="Colors" Relationship="Self.FK_Products_Colors" FromRole="Products" ToRole="Colors" />
-          <NavigationProperty Name="Images" Relationship="Self.FK_Products_Images" FromRole="Products" ToRole="Images" />
-          <NavigationProperty Name="OrderItems" Relationship="Self.FK_OrderItems_Products" FromRole="Products" ToRole="OrderItems" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Products" FromRole="Products" ToRole="Reviews" />
-          <NavigationProperty Name="Wishlist" Relationship="Self.FK_Wishlist_Products" FromRole="Products" ToRole="Wishlist" />
+          <NavigationProperty Name="Orders" Relationship="EntitiesModel.Payments_Orders_FK" FromRole="Payments" ToRole="Orders" />
+          <NavigationProperty Name="PaymentMethods" Relationship="EntitiesModel.Payments_PaymentMethods_FK" FromRole="Payments" ToRole="PaymentMethods" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -653,9 +725,10 @@
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="Rating" Type="Int32" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
           <Property Name="ReviewDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Reviews_Products" FromRole="Reviews" ToRole="Products" />
+          <NavigationProperty Name="Customers" Relationship="EntitiesModel.Reviews_Customers_FK" FromRole="Reviews" ToRole="Customers" />
+          <NavigationProperty Name="Products" Relationship="EntitiesModel.Reviews_Products_FK" FromRole="Reviews" ToRole="Products" />
         </EntityType>
         <EntityType Name="Shipments">
           <Key>
@@ -665,31 +738,31 @@
           <Property Name="OrderID" Type="Int32" Nullable="false" />
           <Property Name="ShippingMethodID" Type="Int32" Nullable="false" />
           <Property Name="ShipmentDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TrackingNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Shipments_Orders" FromRole="Shipments" ToRole="Orders" />
-          <NavigationProperty Name="ShippingMethods" Relationship="Self.FK_Shipments_ShippingMethods" FromRole="Shipments" ToRole="ShippingMethods" />
+          <Property Name="TrackingNumber" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="EntitiesModel.Shipments_Orders_FK1" FromRole="Shipments" ToRole="Orders" />
+          <NavigationProperty Name="ShippingMethods" Relationship="EntitiesModel.Shipments_ShippingMethods_FK" FromRole="Shipments" ToRole="ShippingMethods" />
         </EntityType>
         <EntityType Name="ShippingMethods">
           <Key>
             <PropertyRef Name="ShippingMethodID" />
           </Key>
           <Property Name="ShippingMethodID" Type="Int32" Nullable="false" />
-          <Property Name="ShippingMethodName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Shipments" Relationship="Self.FK_Shipments_ShippingMethods" FromRole="ShippingMethods" ToRole="Shipments" />
+          <Property Name="ShippingMethodName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Shipments" Relationship="EntitiesModel.Shipments_ShippingMethods_FK" FromRole="ShippingMethods" ToRole="Shipments" />
         </EntityType>
         <EntityType Name="Wishlist">
           <Key>
             <PropertyRef Name="WishlistID" />
           </Key>
-          <Property Name="WishlistID" Type="Int32" Nullable="false" />
+          <Property Name="WishlistID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Wishlist_Customers" FromRole="Wishlist" ToRole="Customers" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Wishlist_Products" FromRole="Wishlist" ToRole="Products" />
+          <NavigationProperty Name="Customers" Relationship="EntitiesModel.Wishlist_Customers_FK" FromRole="Wishlist" ToRole="Customers" />
+          <NavigationProperty Name="Products" Relationship="EntitiesModel.Wishlist_Products_FK" FromRole="Wishlist" ToRole="Products" />
         </EntityType>
         <Association Name="FK_Customers_BillingAddresses">
-          <End Role="Addresses" Type="Self.Addresses" Multiplicity="0..1" />
-          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <End Type="EntitiesModel.Addresses" Role="Addresses" Multiplicity="0..1" />
+          <End Type="EntitiesModel.Customers" Role="Customers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Addresses">
               <PropertyRef Name="AddressID" />
@@ -700,8 +773,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Customers_ShippingAddresses">
-          <End Role="Addresses" Type="Self.Addresses" Multiplicity="0..1" />
-          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <End Type="EntitiesModel.Addresses" Role="Addresses" Multiplicity="0..1" />
+          <End Type="EntitiesModel.Customers" Role="Customers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Addresses">
               <PropertyRef Name="AddressID" />
@@ -711,21 +784,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Brands">
-          <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Brands">
-              <PropertyRef Name="BrandID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="BrandID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cart_Customers">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+        <Association Name="Cart_Customers_FK">
+          <End Type="EntitiesModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="EntitiesModel.Cart" Role="Cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="CustomerID" />
@@ -735,57 +796,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Cart_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Categories_ParentCategory">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="CategoryID" />
-            </Principal>
-            <Dependent Role="Categories1">
-              <PropertyRef Name="ParentCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Categories">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="CategoryID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="CategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Products_Colors">
-          <End Role="Colors" Type="Self.Colors" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Colors">
-              <PropertyRef Name="ColorID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="ColorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Customers_Passwords">
-          <End Role="Passwords" Type="Self.Passwords" Multiplicity="0..1" />
-          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <End Type="EntitiesModel.Passwords" Role="Passwords" Multiplicity="0..1" />
+          <End Type="EntitiesModel.Customers" Role="Customers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Passwords">
               <PropertyRef Name="PasswordID" />
@@ -795,9 +808,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Wishlist_Customers">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
-          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+        <Association Name="Orders_Customers_FK">
+          <End Type="EntitiesModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="EntitiesModel.Orders" Role="Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reviews_Customers_FK">
+          <End Type="EntitiesModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="EntitiesModel.Reviews" Role="Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Wishlist_Customers_FK">
+          <End Type="EntitiesModel.Customers" Role="Customers" Multiplicity="1" />
+          <End Type="EntitiesModel.Wishlist" Role="Wishlist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
               <PropertyRef Name="CustomerID" />
@@ -807,21 +844,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Images">
-          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Images">
-              <PropertyRef Name="ImageID" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="ImageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderItems_Orders">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-          <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
+        <Association Name="OrderItems_Orders_FK">
+          <End Type="EntitiesModel.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="EntitiesModel.OrderItems" Role="OrderItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="OrderID" />
@@ -831,21 +856,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderItems_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="OrderItems">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Payments_Orders">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+        <Association Name="Payments_Orders_FK">
+          <End Type="EntitiesModel.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="EntitiesModel.Payments" Role="Payments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="OrderID" />
@@ -855,9 +868,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shipments_Orders">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-          <End Role="Shipments" Type="Self.Shipments" Multiplicity="*" />
+        <Association Name="Shipments_Orders_FK1">
+          <End Type="EntitiesModel.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="EntitiesModel.Shipments" Role="Shipments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="OrderID" />
@@ -867,9 +880,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Payments_PaymentMethods">
-          <End Role="PaymentMethods" Type="Self.PaymentMethods" Multiplicity="1" />
-          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+        <Association Name="Payments_PaymentMethods_FK">
+          <End Type="EntitiesModel.PaymentMethods" Role="PaymentMethods" Multiplicity="1" />
+          <End Type="EntitiesModel.Payments" Role="Payments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PaymentMethods">
               <PropertyRef Name="PaymentMethodID" />
@@ -879,33 +892,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Reviews_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Reviews">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Wishlist_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Wishlist">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Shipments_ShippingMethods">
-          <End Role="ShippingMethods" Type="Self.ShippingMethods" Multiplicity="1" />
-          <End Role="Shipments" Type="Self.Shipments" Multiplicity="*" />
+        <Association Name="Shipments_ShippingMethods_FK">
+          <End Type="EntitiesModel.ShippingMethods" Role="ShippingMethods" Multiplicity="1" />
+          <End Type="EntitiesModel.Shipments" Role="Shipments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ShippingMethods">
               <PropertyRef Name="ShippingMethodID" />
@@ -915,102 +904,112 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ProjectEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Addresses" EntityType="Self.Addresses" />
-          <EntitySet Name="Brands" EntityType="Self.Brands" />
-          <EntitySet Name="Cart" EntityType="Self.Cart" />
-          <EntitySet Name="Categories" EntityType="Self.Categories" />
-          <EntitySet Name="Colors" EntityType="Self.Colors" />
-          <EntitySet Name="Customers" EntityType="Self.Customers" />
-          <EntitySet Name="Images" EntityType="Self.Images" />
-          <EntitySet Name="OrderItems" EntityType="Self.OrderItems" />
-          <EntitySet Name="Orders" EntityType="Self.Orders" />
-          <EntitySet Name="Passwords" EntityType="Self.Passwords" />
-          <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethods" />
-          <EntitySet Name="Payments" EntityType="Self.Payments" />
-          <EntitySet Name="Products" EntityType="Self.Products" />
-          <EntitySet Name="Reviews" EntityType="Self.Reviews" />
-          <EntitySet Name="Shipments" EntityType="Self.Shipments" />
-          <EntitySet Name="ShippingMethods" EntityType="Self.ShippingMethods" />
-          <EntitySet Name="Wishlist" EntityType="Self.Wishlist" />
-          <AssociationSet Name="FK_Customers_BillingAddresses" Association="Self.FK_Customers_BillingAddresses">
-            <End Role="Addresses" EntitySet="Addresses" />
-            <End Role="Customers" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customers_ShippingAddresses" Association="Self.FK_Customers_ShippingAddresses">
-            <End Role="Addresses" EntitySet="Addresses" />
-            <End Role="Customers" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Brands" Association="Self.FK_Products_Brands">
-            <End Role="Brands" EntitySet="Brands" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cart_Customers" Association="Self.FK_Cart_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cart_Products" Association="Self.FK_Cart_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Categories_ParentCategory" Association="Self.FK_Categories_ParentCategory">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Categories1" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Colors" Association="Self.FK_Products_Colors">
-            <End Role="Colors" EntitySet="Colors" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customers_Passwords" Association="Self.FK_Customers_Passwords">
-            <End Role="Passwords" EntitySet="Passwords" />
-            <End Role="Customers" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Wishlist_Customers" Association="Self.FK_Wishlist_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Wishlist" EntitySet="Wishlist" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Products_Images" Association="Self.FK_Products_Images">
-            <End Role="Images" EntitySet="Images" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderItems_Orders" Association="Self.FK_OrderItems_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderItems" EntitySet="OrderItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderItems_Products" Association="Self.FK_OrderItems_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="OrderItems" EntitySet="OrderItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Payments_Orders" Association="Self.FK_Payments_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Payments" EntitySet="Payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Shipments_Orders" Association="Self.FK_Shipments_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Shipments" EntitySet="Shipments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Payments_PaymentMethods" Association="Self.FK_Payments_PaymentMethods">
-            <End Role="PaymentMethods" EntitySet="PaymentMethods" />
-            <End Role="Payments" EntitySet="Payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Reviews_Products" Association="Self.FK_Reviews_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Reviews" EntitySet="Reviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Wishlist_Products" Association="Self.FK_Wishlist_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Wishlist" EntitySet="Wishlist" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Shipments_ShippingMethods" Association="Self.FK_Shipments_ShippingMethods">
-            <End Role="ShippingMethods" EntitySet="ShippingMethods" />
-            <End Role="Shipments" EntitySet="Shipments" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="ColorID" Type="Int32" Nullable="false" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="StockQuantity" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="Int32" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Brands" Relationship="EntitiesModel.Product_Brands_FK" FromRole="Products" ToRole="Brands" />
+          <NavigationProperty Name="Cart" Relationship="EntitiesModel.Cart_Products_FK" FromRole="Products" ToRole="Cart" />
+          <NavigationProperty Name="Categories" Relationship="EntitiesModel.Product_Categories_FK" FromRole="Products" ToRole="Categories" />
+          <NavigationProperty Name="Colors" Relationship="EntitiesModel.Product_Colors_FK" FromRole="Products" ToRole="Colors" />
+          <NavigationProperty Name="OrderItems" Relationship="EntitiesModel.OrderItems_Products_FK" FromRole="Products" ToRole="OrderItems" />
+          <NavigationProperty Name="Reviews" Relationship="EntitiesModel.Reviews_Products_FK" FromRole="Products" ToRole="Reviews" />
+          <NavigationProperty Name="Wishlist" Relationship="EntitiesModel.Wishlist_Products_FK" FromRole="Products" ToRole="Wishlist" />
+        </EntityType>
+        <Association Name="Product_Brands_FK">
+          <End Type="EntitiesModel.Brands" Role="Brands" Multiplicity="1" />
+          <End Type="EntitiesModel.Products" Role="Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brands">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Cart_Products_FK">
+          <End Type="EntitiesModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="EntitiesModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_Categories_FK">
+          <End Type="EntitiesModel.Categories" Role="Categories" Multiplicity="1" />
+          <End Type="EntitiesModel.Products" Role="Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_Colors_FK">
+          <End Type="EntitiesModel.Colors" Role="Colors" Multiplicity="1" />
+          <End Type="EntitiesModel.Products" Role="Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Colors">
+              <PropertyRef Name="ColorID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ColorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OrderItems_Products_FK">
+          <End Type="EntitiesModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="EntitiesModel.OrderItems" Role="OrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderItems">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reviews_Products_FK">
+          <End Type="EntitiesModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="EntitiesModel.Reviews" Role="Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Wishlist_Products_FK">
+          <End Type="EntitiesModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="EntitiesModel.Wishlist" Role="Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1019,174 +1018,174 @@
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="EntitiesModel.Addresses">
               <MappingFragment StoreEntitySet="Addresses">
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="EntitiesModel.Brands">
               <MappingFragment StoreEntitySet="Brands">
-                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
                 <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Cart">
             <EntityTypeMapping TypeName="EntitiesModel.Cart">
               <MappingFragment StoreEntitySet="Cart">
-                <ScalarProperty Name="CartID" ColumnName="CartID" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CartID" ColumnName="CartID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="EntitiesModel.Categories">
               <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="ParentCategoryID" ColumnName="ParentCategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Colors">
             <EntityTypeMapping TypeName="EntitiesModel.Colors">
               <MappingFragment StoreEntitySet="Colors">
-                <ScalarProperty Name="ColorID" ColumnName="ColorID" />
                 <ScalarProperty Name="ColorName" ColumnName="ColorName" />
+                <ScalarProperty Name="ColorID" ColumnName="ColorID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="EntitiesModel.Customers">
               <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PasswordID" ColumnName="PasswordID" />
-                <ScalarProperty Name="BillingAddressID" ColumnName="BillingAddressID" />
-                <ScalarProperty Name="ShippingAddressID" ColumnName="ShippingAddressID" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
                 <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="ShippingAddressID" ColumnName="ShippingAddressID" />
+                <ScalarProperty Name="BillingAddressID" ColumnName="BillingAddressID" />
+                <ScalarProperty Name="PasswordID" ColumnName="PasswordID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Images">
             <EntityTypeMapping TypeName="EntitiesModel.Images">
               <MappingFragment StoreEntitySet="Images">
-                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
-                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
                 <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderItems">
             <EntityTypeMapping TypeName="EntitiesModel.OrderItems">
               <MappingFragment StoreEntitySet="OrderItems">
-                <ScalarProperty Name="OrderItemID" ColumnName="OrderItemID" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderItemID" ColumnName="OrderItemID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="EntitiesModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Passwords">
             <EntityTypeMapping TypeName="EntitiesModel.Passwords">
               <MappingFragment StoreEntitySet="Passwords">
-                <ScalarProperty Name="PasswordID" ColumnName="PasswordID" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordID" ColumnName="PasswordID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PaymentMethods">
             <EntityTypeMapping TypeName="EntitiesModel.PaymentMethods">
               <MappingFragment StoreEntitySet="PaymentMethods">
-                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
                 <ScalarProperty Name="PaymentMethodName" ColumnName="PaymentMethodName" />
+                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="EntitiesModel.Payments">
               <MappingFragment StoreEntitySet="Payments">
-                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="EntitiesModel.Products">
-              <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="ColorID" ColumnName="ColorID" />
-                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="StockQuantity" ColumnName="StockQuantity" />
-                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentMethodID" ColumnName="PaymentMethodID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Reviews">
             <EntityTypeMapping TypeName="EntitiesModel.Reviews">
               <MappingFragment StoreEntitySet="Reviews">
-                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Shipments">
             <EntityTypeMapping TypeName="EntitiesModel.Shipments">
               <MappingFragment StoreEntitySet="Shipments">
-                <ScalarProperty Name="ShipmentID" ColumnName="ShipmentID" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="ShippingMethodID" ColumnName="ShippingMethodID" />
-                <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
                 <ScalarProperty Name="TrackingNumber" ColumnName="TrackingNumber" />
+                <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+                <ScalarProperty Name="ShippingMethodID" ColumnName="ShippingMethodID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ShipmentID" ColumnName="ShipmentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ShippingMethods">
             <EntityTypeMapping TypeName="EntitiesModel.ShippingMethods">
               <MappingFragment StoreEntitySet="ShippingMethods">
-                <ScalarProperty Name="ShippingMethodID" ColumnName="ShippingMethodID" />
                 <ScalarProperty Name="ShippingMethodName" ColumnName="ShippingMethodName" />
+                <ScalarProperty Name="ShippingMethodID" ColumnName="ShippingMethodID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Wishlist">
             <EntityTypeMapping TypeName="EntitiesModel.Wishlist">
               <MappingFragment StoreEntitySet="Wishlist">
-                <ScalarProperty Name="WishlistID" ColumnName="WishlistID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="WishlistID" ColumnName="WishlistID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="EntitiesModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="StockQuantity" ColumnName="StockQuantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="ColorID" ColumnName="ColorID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
               </MappingFragment>
             </EntityTypeMapping>

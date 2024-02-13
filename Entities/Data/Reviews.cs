@@ -21,6 +21,7 @@ namespace Entities.Data
         public string Comment { get; set; }
         public System.DateTime ReviewDate { get; set; }
     
+        public virtual Customers Customers { get; set; }
         public virtual Products Products { get; set; }
     }
 }

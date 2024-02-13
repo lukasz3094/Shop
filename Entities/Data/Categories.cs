@@ -17,7 +17,6 @@ namespace Entities.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Categories()
         {
-            this.Categories1 = new HashSet<Categories>();
             this.Products = new HashSet<Products>();
         }
     
@@ -25,9 +24,6 @@ namespace Entities.Data
         public string CategoryName { get; set; }
         public Nullable<int> ParentCategoryID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Categories> Categories1 { get; set; }
-        public virtual Categories Categories2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Products> Products { get; set; }
     }

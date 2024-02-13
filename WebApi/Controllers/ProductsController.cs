@@ -2,6 +2,7 @@
 using Services;
 using Entities;
 using Services.Services;
+using Services.Models;
 
 [Route("api/products")]
 [ApiController]
@@ -23,57 +24,49 @@ public class ProductsController : ControllerBase
         return Ok(products);
     }
 
-    //// GET: api/products/5
-    //[HttpGet("{id}")]
-    //public IActionResult Get(int id)
-    //{
-    //    var product = _productService.GetProductById(id);
-    //    if (product == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    return Ok(product);
-    //}
+    // GET: api/products/5
+    [HttpGet("{id}")]
+    public IActionResult Get(int id)
+    {
+        var product = _productService.GetById(id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+        return Ok(product);
+    }
 
-    //// POST: api/products
-    //[HttpPost]
-    //public IActionResult Post([FromBody] Product product)
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        return BadRequest(ModelState);
-    //    }
-    //    _productService.AddProduct(product);
-    //    return CreatedAtAction("Get", new { id = product.Id }, product);
-    //}
+    // POST: api/products
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] ProductModel product)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
-    //// PUT: api/products/5
-    //[HttpPut("{id}")]
-    //public IActionResult Put(int id, [FromBody] Product product)
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        return BadRequest(ModelState);
-    //    }
-    //    if (id != product.Id)
-    //    {
-    //        return BadRequest();
-    //    }
+        await _productService.Add(product);
+        return Ok();
+    }
 
-    //    _productService.UpdateProduct(product);
-    //    return NoContent();
-    //}
+    // PUT: api/products/5
+    [HttpPut]
+    public async Task<IActionResult> Put([FromBody] ProductModel product)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
-    //// DELETE: api/products/5
-    //[HttpDelete("{id}")]
-    //public IActionResult Delete(int id)
-    //{
-    //    var product = _productService.GetProductById(id);
-    //    if (product == null)
-    //    {
-    //        return NotFound();
-    //    }
-    //    _productService.DeleteProduct(id);
-    //    return NoContent();
-    //}
+        await _productService.Update(product);
+        return Ok();
+    }
+
+    // DELETE: api/products/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _productService.Delete(id);
+        return Ok();
+    }
 }

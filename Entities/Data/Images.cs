@@ -14,17 +14,8 @@ namespace Entities.Data
     
     public partial class Images
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Images()
-        {
-            this.Products = new HashSet<Products>();
-        }
-    
         public int ImageID { get; set; }
         public string ImageName { get; set; }
         public byte[] ImageData { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Products> Products { get; set; }
     }
 }

@@ -40,30 +40,86 @@ namespace Services.Services
             }
         }
 
-        //public async Task<Product> GetByIdAsync(int id)
-        //{
-        //    return await _dbContext.Products.FindAsync(id);
-        //}
+        public async Task<ProductModel> GetById(int id)
+        {
+            using (var db = new ProjectEntities())
+            {
+                var product = await db.Products
+                    .Where(p => p.ProductID == id)
+                    .Select(p => new ProductModel
+                    {
+                        Id = p.ProductID,
+                        ProductName = p.ProductName,
+                        CategoryId = p.CategoryID,
+                        CategoryName = p.Categories.CategoryName,
+                        ColorId = p.ColorID,
+                        ColorName = p.Colors.ColorName,
+                        BrandId = p.BrandID,
+                        BrandName = p.Brands.BrandName,
+                        Price = p.Price,
+                        Quantity = p.StockQuantity,
+                        Description = p.Description
+                    })
+                    .FirstOrDefaultAsync();
 
-        //public async Task<Product> CreateAsync(Product product)
-        //{
-        //    _dbContext.Products.Add(product);
-        //    await _dbContext.SaveChangesAsync();
-        //    return product;
-        //}
+                return product;
+            }
+        }
 
-        //public async Task<Product> UpdateAsync(Product product)
-        //{
-        //    _dbContext.Entry(product).State = EntityState.Modified;
-        //    await _dbContext.SaveChangesAsync();
-        //    return product;
-        //}
+        public async Task Add(ProductModel product)
+        {
+            using (var db = new ProjectEntities())
+            {
+                var newProduct = new Products
+                {
+                    ProductName = product.ProductName,
+                    CategoryID = (int)product.CategoryId,
+                    ColorID = (int)product.ColorId,
+                    BrandID = (int)product.BrandId,
+                    Price = (decimal)product.Price,
+                    StockQuantity = (int)product.Quantity,
+                    Description = product.Description
+                };
 
-        //public async Task DeleteAsync(int id)
-        //{
-        //    var product = await _dbContext.Products.FindAsync(id);
-        //    _dbContext.Products.Remove(product);
-        //    await _dbContext.SaveChangesAsync();
-        //}
+                db.Products.Add(newProduct);
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task Update(ProductModel product)
+        {
+            using (var db = new ProjectEntities())
+            {
+                var existingProduct = await db.Products
+                    .Where(p => p.ProductID == product.Id)
+                    .FirstOrDefaultAsync();
+
+                if (existingProduct != null)
+                {
+                    existingProduct.ProductName = product.ProductName;
+                    existingProduct.CategoryID = (int)product.CategoryId;
+                    existingProduct.ColorID = (int)product.ColorId;
+                    existingProduct.BrandID = (int)product.BrandId;
+                    existingProduct.Price = (decimal)product.Price;
+                    existingProduct.StockQuantity = (int)product.Quantity;
+                    existingProduct.Description = product.Description;
+
+                    await db.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task Delete(int id)
+        {
+            using (var db = new ProjectEntities())
+            {
+                var product = await db.Products
+                    .Where(p => p.ProductID == id)
+                    .FirstOrDefaultAsync();
+
+                db.Products.Remove(product);
+                await db.SaveChangesAsync();
+            }
+        }
     }
 }

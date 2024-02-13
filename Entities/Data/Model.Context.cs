@@ -37,10 +37,10 @@ namespace Entities.Data
         public virtual DbSet<Passwords> Passwords { get; set; }
         public virtual DbSet<PaymentMethods> PaymentMethods { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<Reviews> Reviews { get; set; }
         public virtual DbSet<Shipments> Shipments { get; set; }
         public virtual DbSet<ShippingMethods> ShippingMethods { get; set; }
         public virtual DbSet<Wishlist> Wishlist { get; set; }
+        public virtual DbSet<Products> Products { get; set; }
     }
 }

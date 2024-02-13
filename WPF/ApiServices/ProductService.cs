@@ -23,5 +23,26 @@ namespace WPF.ApiServices
             var result = await _apiClient.GetAsync<List<ProductModel>>("api/products");
             return result;
         }
+
+        public async Task<ProductModel> GetById(int id)
+        {
+            var result = await _apiClient.GetAsync<ProductModel>($"api/products/{id}");
+            return result;
+        }
+
+        public async Task Add(ProductModel model)
+        {
+            await _apiClient.PostAsync("api/products", model);
+        }
+
+        public async Task Update(ProductModel model)
+        {
+            await _apiClient.PutAsync("api/products", model);
+        }
+
+        public async Task Delete(int id)
+        {
+            await _apiClient.DeleteAsync($"api/products/{id}");
+        }
     }
 }

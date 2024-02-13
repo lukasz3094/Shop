@@ -30,7 +30,7 @@ namespace Entities.Data
         public string ProductName { get; set; }
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
-        public Nullable<int> ImageID { get; set; }
+        public Nullable<int> Image { get; set; }
         public string Description { get; set; }
     
         public virtual Brands Brands { get; set; }
@@ -38,7 +38,6 @@ namespace Entities.Data
         public virtual ICollection<Cart> Cart { get; set; }
         public virtual Categories Categories { get; set; }
         public virtual Colors Colors { get; set; }
-        public virtual Images Images { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderItems> OrderItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
