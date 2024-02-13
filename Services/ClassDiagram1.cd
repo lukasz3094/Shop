@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Services.Models.BrandModel" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAAAAAAAAIABAAAQAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\BrandModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Services.Models.CartModel" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAAABIABAAAAQoAAAABAAAAAAgAAAAAA=</HashCode>
+      <FileName>Models\CartModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Services.Models.CategoryModel" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAAAAAAAAIABAAAQAgACAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Models\CategoryModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Services.Models.ColorModel" BaseTypeListCollapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAAAAAAAAIABAAAQAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ColorModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Services.Models.ProductModel" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgACCAAAAQBgggAFIKhAAAAAgDEBQBBIAAACkAAYAAA=</HashCode>
+      <FileName>Models\ProductModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Services.Models.WishListModel" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAAAAIABAAAAQoAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WishListModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Services.Services.BrandRepository">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\BrandRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Services.Services.CartRepository">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAABAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\CartRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Services.Services.CategoryRepository">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\CategoryRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Services.Services.ColorRepository">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\ColorRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Services.Services.ProductRepository">
+    <Position X="2.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>Services\ProductRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Services.Services.WishListRepository">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAABAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\WishListRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

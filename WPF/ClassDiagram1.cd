@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WPF.ApiServices.BrandService">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>ApiServices\BrandService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPF.ApiServices.CartService">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAQAAAAAAAAAAAAEAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>ApiServices\CartService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPF.ApiServices.CategoryService" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>ApiServices\CategoryService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPF.ApiServices.ColorService">
+    <Position X="11" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>ApiServices\ColorService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPF.ApiServices.ProductService" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAQAAAAAAAAAAAAEAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>ApiServices\ProductService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPF.ApiServices.WishListService">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAQAAAAAAAAAAAAEAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>ApiServices\WishListService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPF.App">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPF.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAASAQAAAAgAAAAAAAAIAAAAAAAACAIAQABAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPF.Properties.Resources">
+    <Position X="9.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPF.Properties.Settings">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyWpfApp.Services.ApiClient">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABABAAgAAAAAAABAAAAAAAAAAAAAAAAAAIAAAAIA=</HashCode>
+      <FileName>Utils\ApiClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WPF.ViewModel.CartVM" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAEAAIAgAIAAAAAAAgAAAAAAAAIAAAAAAAAQ=</HashCode>
+      <FileName>ViewModel\CartVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPF.ViewModel.MainWindowVM" BaseTypeListCollapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAgAIAAAAAAAgAAAAAAAQIAAAAAAAAQ=</HashCode>
+      <FileName>ViewModel\MainWindowVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPF.ViewModel.ProductAddVM" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgAAIAAAAQAgSAAFIEAASAQAgAAAUAAAAAAAgAQJAAA=</HashCode>
+      <FileName>ViewModel\ProductAddVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPF.ViewModel.ProductDetailsVM" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAEAAIAgAIAAAAAAAgAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\ProductDetailsVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPF.ViewModel.WishListVM" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAEAAIAgAIAAAAAAAgAAAAAAAAIAAAAAAAAQ=</HashCode>
+      <FileName>ViewModel\WishListVM.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPF.Windows.CartWindow" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAIAAAAAAAAAAIAQAAAAAAAAAA=</HashCode>
+      <FileName>Windows\CartWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.169" Collapsed="true" />
+  </Class>
+  <Class Name="WPF.Windows.ProductAddWindow" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABACAAQAAAAQQEAAAAAgCAAAAAAQECAAAAAAAAAQAgA=</HashCode>
+      <FileName>Windows\ProductAddWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPF.Windows.ProductDetailsWindow" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQAAAIAAAQAAEAAAAACAAAAAAAAACAACA=</HashCode>
+      <FileName>Windows\ProductDetailsWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="WPF.Windows.WishListWindow" BaseTypeListCollapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAIAAAAAAAAAAIAQAAAAAAAAAA=</HashCode>
+      <FileName>Windows\WishListWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
