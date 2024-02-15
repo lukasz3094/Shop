@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyWpfApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,14 @@ namespace WPF
     /// </summary>
     public partial class App : Application
     {
+        public static ApiClient ApiClient { get; private set; }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var baseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+            ApiClient = new ApiClient(baseUrl);
+        }
     }
 }

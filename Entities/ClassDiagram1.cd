@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Entities.Data.ProjectEntities">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACFAAECAAAFAABAAAAAAAAAQEAAAEBACAAAAgAABAAQ=</HashCode>
+      <FileName>Data\Model.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Addresses">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAEAAAAAAAAAAAAIAAAAAAAAAAIAAAABAAIABIAAAAA=</HashCode>
+      <FileName>Data\Addresses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Brands">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAABAAAAAAAAQ=</HashCode>
+      <FileName>Data\Brands.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Cart">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAgAAACAQ=</HashCode>
+      <FileName>Data\Cart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Categories">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAACAAAAAAAACAAAAAAAQ=</HashCode>
+      <FileName>Data\Categories.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Colors">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAw=</HashCode>
+      <FileName>Data\Colors.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Customers">
+    <Position X="5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACFAAEAAACgAAAABAAAAQAgAGQAAAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Data\Customers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Images">
+    <Position X="12.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAQAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Images.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.OrderItems">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAEAABAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAQ=</HashCode>
+      <FileName>Data\OrderItems.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Orders">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAEAABAAAAFQABAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Orders.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Passwords">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAgAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Passwords.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.PaymentMethods">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAABAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Data\PaymentMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Payments">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAABCAAAEAAAAAAAAAAACAAAAAABAAAAAAIAAAAAA=</HashCode>
+      <FileName>Data\Payments.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Products">
+    <Position X="9.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECAAAEACAQEgAAAAAAAAAIAAAAAAEBAAABAAgAAJAAg=</HashCode>
+      <FileName>Data\Products.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Reviews">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEAAAAEAAAAAAgAAAAAAAAAEBAAAAEAAAAAAAAAAAQ=</HashCode>
+      <FileName>Data\Reviews.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Shipments">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAABAAAAAAAAAAAAAAAAEQAQAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Data\Shipments.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.ShippingMethods">
+    <Position X="2" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAEAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\ShippingMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entities.Data.Wishlist">
+    <Position X="3.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEAAAAAAAAAAAAAAAAAAACAEAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Data\Wishlist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
